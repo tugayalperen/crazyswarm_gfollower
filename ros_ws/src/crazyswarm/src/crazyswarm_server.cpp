@@ -145,7 +145,7 @@ public:
   {
     ros::NodeHandle nl("~");
     nl.param("enable_logging", m_enableLogging, false);
-    nl.param("enable_logging_pose", m_enableLoggingPose, false);
+    nl.param("enable_logging_pose", m_enableLoggingPose, true);
     nl.param("enable_parameters", m_enableParameters, true);
     nl.param("force_no_cache", m_forceNoCache, false);
 

@@ -376,6 +376,14 @@ class Crazyflie:
         self.setState.omega = firm.mkvec(0.0, 0.0, yawRate)
         # TODO: should we set pos, acc, yaw to zero, or rely on modes to not read them?
 
+    def cmdHover(self, vx, vy, yawRate, zDistance):
+    self.mode = Crazyflie.MODE_LOW_VELOCITY
+    vel = [vx, vy, 0]
+    self.setState.vel = firm.mkvec(*vel)
+    self.setState.omega = firm.mkvec(0.0, 0.0, yawRate)
+    # self.setState.pos = firm.mkvec(self.state.pos.x, self.state.pos.y, zDistance)
+    # TODO: should we set pos, acc, yaw to zero, or rely on modes to not read them?
+
     def cmdStop(self):
         # TODO: set mode to MODE_IDLE?
         pass

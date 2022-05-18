@@ -118,6 +118,11 @@ class Crazyflie:
         self.cmdVelocityWorldMsg.header.seq = 0
         self.cmdVelocityWorldMsg.header.frame_id = "/world"
 
+        self.cmdHoverPublisher = rospy.Publisher(prefix + "/cmd_hover", Hover, queue_size=1)
+        self.cmdHoverMsg = Hover()
+        self.cmdHoverMsg.header.seq = 0
+        self.cmdHoverMsg.header.frame_id = "/world"   
+
     def setGroupMask(self, groupMask):
         """Sets the group mask bits for this robot.
 
@@ -451,6 +456,16 @@ class Crazyflie:
         self.cmdVelocityWorldMsg.vel.z = vel[2]
         self.cmdVelocityWorldMsg.yawRate = yawRate
         self.cmdVelocityWorldPublisher.publish(self.cmdVelocityWorldMsg)
+
+    def cmdHover(self, vx, vy, yawRate, zDistance):
+
+        self.cmdHoverMsg.header.stamp = rospy.Time.now()
+        self.cmdHoverMsg.header.seq += 1
+        self.cmdHoverMsg.vx = vx
+        self.cmdHoverMsg.vy = vy
+        self.cmdHoverMsg.yawrate = yawRate
+        self.cmdHoverMsg.zDistance = zDistance
+        self.cmdHoverPublisher.publish(self.cmdHoverMsg)         
 
     def cmdStop(self):
         """Interrupts any high-level command to stop and cut motor power.
